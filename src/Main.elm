@@ -128,6 +128,14 @@ initialModel =
                     "https://wiby.me/"
                     (Just <| text "Search engine for classic websites")
                 ]
+            , Section "Shaving"
+                [ Entry "Badger & Blade"
+                    "https://www.badgerandblade.com/forum/forums/"
+                    (Just <|
+                        text <|
+                            "Forum with extensive info about shaving products & methods"
+                    )
+                ]
             , Section "Shopping"
                 [ Entry "Higher Hacknell"
                     "https://www.higherhacknell.co.uk/cat/organic-wool-and-sheepskins"
