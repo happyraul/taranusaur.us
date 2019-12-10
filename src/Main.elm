@@ -252,6 +252,9 @@ initialModel =
                         ++ "360000557452-Super-Nt-Firmware-Update-v4-9"
                     )
                     Nothing
+                , Entry "Racketboy"
+                    "https://www.racketboy.com/"
+                    (Just <| text "Articles about retro gaming")
                 , Entry "Wii & Wii U Modding Guide"
                     "https://sites.google.com/site/completesg/home"
                     Nothing
