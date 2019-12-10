@@ -252,6 +252,9 @@ initialModel =
                         ++ "360000557452-Super-Nt-Firmware-Update-v4-9"
                     )
                     Nothing
+                , Entry "The Backloggery"
+                    "https://backloggery.com/"
+                    (Just <| text "Track your game collection and backlog")
                 , Entry "Racketboy"
                     "https://www.racketboy.com/"
                     (Just <| text "Articles about retro gaming")
