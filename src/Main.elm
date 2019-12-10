@@ -132,6 +132,15 @@ initialModel =
                         text "Blog on financial independence and simple living"
                     )
                 ]
+            , Section "Reference"
+                [ Entry "Pinouts"
+                    "https://pinouts.ru/"
+                    (Just <|
+                        text <|
+                            "Handbook of hardware schemes, cables layouts and "
+                                ++ "connectors pinouts"
+                    )
+                ]
             , Section "Reviews"
                 [ Entry "Flashlight information"
                     "http://lygte-info.dk/"
