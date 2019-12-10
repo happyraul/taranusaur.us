@@ -118,6 +118,9 @@ initialModel =
                 [ Entry "Ars Technica"
                     "https://arstechnica.com/"
                     (Just <| text "Technology news, analysis, reviews")
+                , Entry "Hacker News"
+                    "https://news.ycombinator.com/"
+                    (Just <| text "Programming/tech articles and discussions")
                 , Entry "National Public Radio"
                     "https://text.npr.org/"
                     (Just <| text "Text-only version of NPR")
