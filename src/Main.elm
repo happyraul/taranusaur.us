@@ -76,7 +76,10 @@ initialModel =
                     )
                 ]
             , Section "Coins"
-                [ Entry "Swiss coin mintage figures"
+                [ Entry "European Central Bank Coins"
+                    "https://www.ecb.europa.eu/euro/coins/html/index.en.html"
+                    (Just <| text "Pictures and info about all the Euro coins")
+                , Entry "Swiss coin mintage figures"
                     "https://www.swissmint.ch/e/dokumentation/publikationen/liste.php"
                     Nothing
                 , Entry "Swiss coins in circulation"
@@ -106,6 +109,19 @@ initialModel =
                                 ++ "education"
                     )
                 ]
+            , Section "Forums"
+                [ Entry "Ars Technica OpenForum"
+                    "https://arstechnica.com/civis/"
+                    Nothing
+                ]
+            , Section "News"
+                [ Entry "Ars Technica"
+                    "https://arstechnica.com/"
+                    (Just <| text "Technology news, analysis, reviews")
+                , Entry "National Public Radio"
+                    "https://text.npr.org/"
+                    (Just <| text "Text-only version of NPR")
+                ]
             , Section "Personal Finance"
                 [ Entry "Frugalwoods"
                     "https://www.frugalwoods.com/"
@@ -121,6 +137,13 @@ initialModel =
                             "Basically the most comprehensive website on the "
                                 ++ "Internet for information about "
                                 ++ "flashlights, batteries, and chargers"
+                    )
+                , Entry "RTINGS"
+                    "https://www.rtings.com/"
+                    (Just <|
+                        text <|
+                            "Reviews and ratings for TVs, headphones, "
+                                ++ "monitors, and soundbars"
                     )
                 ]
             , Section "Search"
