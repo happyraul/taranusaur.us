@@ -5,6 +5,7 @@ import Element exposing (..)
 import Element.Background as Background
 import Element.Events as Events
 import Element.Font as Font
+import Html.Attributes
 import Json.Decode as Decode
 
 
@@ -316,6 +317,16 @@ edges =
     { top = 0, right = 0, bottom = 0, left = 0 }
 
 
+chunk : Int -> List a -> List (List a)
+chunk size items =
+    case items of
+        first :: rest ->
+            List.take size items :: chunk size (List.drop size items)
+
+        [] ->
+            []
+
+
 colors =
     { primary = rgb 0.2 0.72 0.91
     , success = rgb 0.275 0.533 0.278
@@ -361,6 +372,7 @@ view model =
                     , Background.color colors.white
                     ]
                     (viewPageHeading model.h1
+                        :: viewNavigation sections model.activeLink
                         :: List.map (viewSection 1 model.activeLink) sections
                     )
                 , column [ width <| fillPortion 1 ] []
@@ -378,6 +390,70 @@ viewPageHeading heading =
         (text heading)
 
 
+viewNavigation : List Entry -> Maybe String -> Element Msg
+viewNavigation entries activeLink =
+    let
+        toName : Entry -> Maybe String
+        toName entry =
+            case entry of
+                Section name _ ->
+                    Just name
+
+                Entry _ _ _ ->
+                    Nothing
+
+        sections : List String
+        sections =
+            List.filterMap toName entries
+
+        chunkSize : Int
+        chunkSize =
+            ceiling (toFloat (List.length sections) / 6)
+
+        columns : List (List String)
+        columns =
+            chunk chunkSize sections
+    in
+    wrappedRow
+        [ spacing 20
+        , width fill
+        , Font.size 18
+        ]
+        (List.map (viewNavColumn activeLink) columns)
+
+
+viewNavColumn : Maybe String -> List String -> Element Msg
+viewNavColumn activeLink sections =
+    column
+        [ width <| fillPortion 1
+        ]
+        (List.map (viewNavLink activeLink) sections)
+
+
+viewNavLink : Maybe String -> String -> Element Msg
+viewNavLink activeLink section =
+    let
+        baseAttributes =
+            [ Font.color colors.link
+            , Events.onMouseEnter (HoveredLink section)
+            , Events.onMouseLeave UnHoveredLink
+            ]
+
+        attributes =
+            case activeLink of
+                Just link ->
+                    if link == section then
+                        Font.underline :: baseAttributes
+
+                    else
+                        baseAttributes
+
+                Nothing ->
+                    baseAttributes
+    in
+    link attributes { url = "#" ++ section, label = text section }
+
+
 viewSection : Int -> Maybe String -> Entry -> Element Msg
 viewSection level activeLink entry =
     case entry of
@@ -391,12 +467,13 @@ viewSection level activeLink entry =
                             | bottom = 0
                             , left = 40 * (level - 1)
                         }
+                    , htmlAttribute (Html.Attributes.id name)
                     ]
                     (text name)
                     :: List.map (viewEntry level activeLink) entries
                 )
 
-        Entry anchor target extra ->
+        Entry _ _ _ ->
             Element.none
 
 
