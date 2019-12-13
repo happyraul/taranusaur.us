@@ -408,25 +408,29 @@ viewNavigation entries activeLink =
 
         chunkSize : Int
         chunkSize =
-            ceiling (toFloat (List.length sections) / 6)
+            ceiling (toFloat (List.length sections) / 3)
 
         columns : List (List String)
         columns =
             chunk chunkSize sections
     in
-    wrappedRow
-        [ spacing 20
-        , width fill
-        , Font.size 18
+    row [ width fill ]
+        [ column [ width (fillPortion 1) ]
+            [ wrappedRow
+                [ spacing 20
+                , width fill
+                , Font.size 18
+                ]
+                (List.map (viewNavColumn activeLink) columns)
+            ]
+        , column [ width (fillPortion 1) ] []
         ]
-        (List.map (viewNavColumn activeLink) columns)
 
 
 viewNavColumn : Maybe String -> List String -> Element Msg
 viewNavColumn activeLink sections =
     column
-        [ width <| fillPortion 1
-        ]
+        [ width <| fillPortion 1 ]
         (List.map (viewNavLink activeLink) sections)
 
 
