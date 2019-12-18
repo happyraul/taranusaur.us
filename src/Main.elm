@@ -68,6 +68,11 @@ initialModel =
                             , text " (board game)"
                             ]
                     )
+                , Entry "Fifty-Nine Parks"
+                    "https://59parks.net/"
+                    (Just <|
+                        text "Print series celebrating the U.S. National Parks"
+                    )
                 ]
             , Section "Astronomy"
                 [ Entry "Heavens-Above"
