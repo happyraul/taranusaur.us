@@ -59,7 +59,12 @@ initialModel =
                     )
                 ]
             , Section "Art"
-                [ Entry "Jakub Rozalski"
+                [ Entry "Fifty-Nine Parks"
+                    "https://59parks.net/"
+                    (Just <|
+                        text "Print series celebrating the U.S. National Parks"
+                    )
+                , Entry "Jakub Rozalski"
                     "https://jrozalski.com/"
                     (Just <|
                         row []
@@ -67,11 +72,6 @@ initialModel =
                             , el [ Font.italic ] (text "Scythe")
                             , text " (board game)"
                             ]
-                    )
-                , Entry "Fifty-Nine Parks"
-                    "https://59parks.net/"
-                    (Just <|
-                        text "Print series celebrating the U.S. National Parks"
                     )
                 ]
             , Section "Astronomy"
@@ -119,6 +119,20 @@ initialModel =
                 [ Entry "Ars Technica OpenForum"
                     "https://arstechnica.com/civis/"
                     Nothing
+                , Entry "Badger & Blade"
+                    "https://www.badgerandblade.com/forum/forums/"
+                    (Just <|
+                        text <|
+                            "Extensive info about shaving products & methods"
+                    )
+                , Entry "Bogleheads"
+                    "https://www.bogleheads.org/forum/index.php"
+                    (Just <| text "Investing advice inspired by Jack Bogle")
+                ]
+            , Section "Health"
+                [ Entry "Symmetric Strength"
+                    "https://symmetricstrength.com/standards/"
+                    (Just <| text "Strength standards by sex and bodyweight")
                 ]
             , Section "News"
                 [ Entry "Ars Technica"
@@ -132,7 +146,13 @@ initialModel =
                     (Just <| text "Text-only version of NPR")
                 ]
             , Section "Personal Finance"
-                [ Entry "Frugalwoods"
+                [ Entry "Bogleheads"
+                    "https://www.bogleheads.org/forum/index.php"
+                    (Just <| text "Investing advice inspired by Jack Bogle")
+                , Entry "FIRECalc"
+                    "https://www.firecalc.com/"
+                    (Just <| text "Retirement calculator")
+                , Entry "Frugalwoods"
                     "https://www.frugalwoods.com/"
                     (Just <|
                         text "Blog on financial independence and simple living"
@@ -174,7 +194,8 @@ initialModel =
                     "https://www.badgerandblade.com/forum/forums/"
                     (Just <|
                         text <|
-                            "Forum with extensive info about shaving products & methods"
+                            "Forum with extensive info about shaving products "
+                                ++ "& methods"
                     )
                 ]
             , Section "Shopping"
