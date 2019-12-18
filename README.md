@@ -1,4 +1,4 @@
-# http://www.taranusaur.us
+# https://www.taranusaur.us
 
 This is a personal website. Currently it only contains a web directory
 of sites I find useful and/or interesting.
