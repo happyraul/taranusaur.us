@@ -232,14 +232,17 @@ initialModel =
                         Nothing
                     ]
                 , Section "Expensive Stuff"
-                    [ Entry "Bellerby and Co Globemakers"
-                        "https://bellerbyandco.com/"
-                        (Just <| text "Handcrafted, personalised globes")
-                    , Entry "AMG"
+                    [ Entry "AMG"
                         ("http://www.high-fidelity-studio.de/"
                             ++ "high-fidelitystudio/Produkte/Seiten/AMG.html"
                         )
                         (Just <| text "High-end turntables")
+                    , Entry "Bellerby and Co Globemakers"
+                        "https://bellerbyandco.com/"
+                        (Just <| text "Handcrafted, personalised globes")
+                    , Entry "Emeco Chairs"
+                        "https://www.emeco.net/products/chairs"
+                        (Just <| text "Iconic Navy chair")
                     ]
                 ]
             , Section "Trains"
