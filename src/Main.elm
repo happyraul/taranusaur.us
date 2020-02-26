@@ -184,6 +184,15 @@ initialModel =
                                 ++ "monitors, and soundbars"
                     )
                 ]
+            , Section "Sailing"
+                [ Entry "WoodenBoat School"
+                    "https://www.thewoodenboatschool.com/"
+                    (Just <|
+                        text <|
+                            "Offers week-long courses in sailing & boat "
+                                ++ "building"
+                    )
+                ]
             , Section "Search"
                 [ Entry "Wiby"
                     "https://wiby.me/"
