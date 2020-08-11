@@ -36,6 +36,10 @@ colors =
     , tan = rgb 0.824 0.706 0.549
     , reallyLightBlue = rgb 0.91 0.99 0.99
     , reallyLightPink = rgb 0.99 0.95 0.99
+    , lilac = rgb 0.808 0.635 0.992 -- #cea2fd
+    , lightViolet = rgb 0.839 0.706 0.988 -- #d6b4fc
+    , lightLavender = rgb 0.875 0.773 0.996 -- #dfc5fe
+    , paleLavender = rgb 0.933 0.812 0.996 -- #eecffe
 
     --, white = rgb 0.99 0.99 0.99
     , white = rgb 0.99 0.99 0.973
@@ -57,9 +61,8 @@ view { title, content } toSubMsg =
             ]
           <|
             row [ height fill, width fill ]
-                [ column [ width <| fillPortion 1 ] []
-                , column
-                    [ width <| fillPortion 30
+                [ column
+                    [ width (fill |> maximum 1600)
                     , Background.color colors.white
                     , paddingEach
                         { edges
@@ -69,6 +72,7 @@ view { title, content } toSubMsg =
                             , bottom = 20
                         }
                     , alignTop
+                    , centerX
                     ]
                     [ paragraph
                         [ Font.size 48
@@ -80,6 +84,5 @@ view { title, content } toSubMsg =
                         ]
                     , map toSubMsg content
                     ]
-                , column [ width <| fillPortion 1 ] []
                 ]
         ]
