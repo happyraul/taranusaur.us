@@ -213,7 +213,7 @@ viewSection level activeLink entry =
                 )
 
         Entry _ _ _ ->
-            Element.none
+            none
 
 
 viewEntry : Int -> Maybe String -> Entry -> Element Msg
@@ -245,7 +245,7 @@ viewEntry level activeLink entry =
                             paragraph [ Font.size 16 ] [ element ]
 
                         Nothing ->
-                            Element.none
+                            none
             in
             column [ paddingEach { edges | left = 40 * level }, spacing 4 ]
                 [ link attributes { url = target, label = text anchor }

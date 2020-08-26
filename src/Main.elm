@@ -7,7 +7,8 @@ import Json.Decode as Decode
 import Page
 import Page.Directory as Directory
 import Page.Index as Index
-import Page.Setup as Setup
+import Page.Setup.Git as SetupGit
+import Page.Setup.Vps as SetupVps
 import Route
 import Session
 import Task
@@ -33,7 +34,8 @@ main =
 type Model
     = Directory Directory.Model
     | Index Index.Model
-    | Setup Setup.Model
+    | SetupVps SetupVps.Model
+    | SetupGit SetupGit.Model
 
 
 init : () -> Url.Url -> Navigation.Key -> ( Model, Cmd Msg )
@@ -54,7 +56,8 @@ type Msg
     | ClickedLink Browser.UrlRequest
     | GotDirectoryMsg Directory.Msg
     | GotIndexMsg Index.Msg
-    | GotSetupMsg Setup.Msg
+    | GotSetupVpsMsg SetupVps.Msg
+    | GotSetupGitMsg SetupGit.Msg
 
 
 toSession : Model -> Session.Session
@@ -66,8 +69,11 @@ toSession page =
         Directory directory ->
             Directory.toSession directory
 
-        Setup setup ->
-            Setup.toSession setup
+        SetupVps setup ->
+            SetupVps.toSession setup
+
+        SetupGit setup ->
+            SetupGit.toSession setup
 
 
 changeRouteTo : Maybe Route.Route -> Model -> ( Model, Cmd Msg )
@@ -87,8 +93,11 @@ changeRouteTo maybeRoute model =
             Directory.init session maybeSection
                 |> updateWith Directory GotDirectoryMsg
 
-        Just Route.Setup ->
-            ( Setup <| Setup.init session, Cmd.none )
+        Just Route.SetupVps ->
+            ( SetupVps <| SetupVps.init session, Cmd.none )
+
+        Just Route.SetupGit ->
+            ( SetupGit <| SetupGit.init session, Cmd.none )
 
         Just Route.Vim ->
             ( model, Cmd.none )
@@ -154,9 +163,13 @@ view model =
             Directory.view directory
                 |> viewPage GotDirectoryMsg
 
-        Setup setup ->
-            Setup.view setup
-                |> viewPage GotSetupMsg
+        SetupVps setup ->
+            SetupVps.view setup
+                |> viewPage GotSetupVpsMsg
+
+        SetupGit setup ->
+            SetupGit.view setup
+                |> viewPage GotSetupGitMsg
 
 
 

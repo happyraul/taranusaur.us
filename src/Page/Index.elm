@@ -45,34 +45,48 @@ update msg model =
 -- VIEW
 
 
+edges =
+    { top = 0, bottom = 0, left = 0, right = 0 }
+
+
 view : Model -> { title : String, content : Element Msg }
 view model =
     let
-        navEntry =
-            viewLink model.activeLink
+        navEntry level =
+            viewLink level model.activeLink
+
+        rootEntry =
+            navEntry 0
     in
     { title = "Perpetually Peregrine"
     , content =
         column [ spacing 7 ]
-            [ navEntry "/books" "Books"
-            , navEntry "/coins" "Coins"
-            , navEntry "/cycling" "Cycling"
-            , navEntry "/directory" "Directory"
-            , navEntry "https://git.taranusaur.us/" "Git"
-            , navEntry "/setup" "Setup"
-            , navEntry "/video-games" "Video Games"
-            , navEntry "/vim" "Vim"
+            [ rootEntry "/books" "Books"
+            , rootEntry "/coins" "Coins"
+            , rootEntry "/cycling" "Cycling"
+            , rootEntry "/directory" "Directory"
+            , rootEntry "https://git.taranusaur.us/" "Git"
+            , column [ spacing 7 ]
+                [ text "Setup"
+                , navEntry 1 "/setup-vps" "VPS & nginx"
+                , navEntry 1 "/setup-git" "git server"
+                ]
+
+            --            , rootEntry "setup/" "Setup"
+            , rootEntry "/video-games" "Video Games"
+            , rootEntry "/vim" "Vim"
             ]
     }
 
 
-viewLink : Maybe String -> String -> String -> Element Msg
-viewLink activeLink url page =
+viewLink : Int -> Maybe String -> String -> String -> Element Msg
+viewLink level activeLink url page =
     let
         baseAttributes =
             [ Font.color Page.colors.link
             , Events.onMouseEnter (HoveredLink page)
             , Events.onMouseLeave UnHoveredLink
+            , paddingEach { edges | left = 40 * level }
             ]
 
         attributes =

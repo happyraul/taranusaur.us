@@ -1,4 +1,4 @@
-module Page.Setup exposing (Model, Msg, init, toSession, update, view)
+module Page.Setup.Vps exposing (Model, Msg, init, toSession, update, view)
 
 import Element exposing (..)
 import Element.Background as Background
@@ -53,7 +53,7 @@ edges =
 
 view : Model -> { title : String, content : Element Msg }
 view model =
-    { title = "Setup"
+    { title = "Setup VPS & nginx"
     , content =
         textColumn [ spacing 15, width fill ]
             [ paragraph []
