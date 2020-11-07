@@ -479,7 +479,7 @@ code : String -> Element msg
 code inner =
     el
         [ Background.color Page.colors.reallyLightBlue
-        , paddingEach { edges | top = 4, bottom = 4, left = 5, right = 5 }
+        , paddingEach { edges | top = 2, bottom = 4, left = 5, right = 5 }
         , Font.family [ Font.monospace ]
         ]
         (text inner)

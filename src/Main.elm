@@ -6,6 +6,7 @@ import Element exposing (..)
 import Json.Decode as Decode
 import Page
 import Page.Directory as Directory
+import Page.Guides as Guides
 import Page.Index as Index
 import Page.Setup.Git as SetupGit
 import Page.Setup.Vps as SetupVps
@@ -34,6 +35,7 @@ main =
 type Model
     = Directory Directory.Model
     | Index Index.Model
+    | Guides Guides.Model
     | SetupVps SetupVps.Model
     | SetupGit SetupGit.Model
 
@@ -66,6 +68,9 @@ toSession page =
         Index index ->
             Index.toSession index
 
+        Guides guides ->
+            Guides.toSession guides
+
         Directory directory ->
             Directory.toSession directory
 
@@ -88,6 +93,9 @@ changeRouteTo maybeRoute model =
 
         Just Route.Index ->
             ( Index <| Index.init session, Cmd.none )
+
+        Just Route.Guides ->
+            ( Guides <| Guides.init session, Cmd.none )
 
         Just (Route.Directory maybeSection) ->
             Directory.init session maybeSection
@@ -148,28 +156,33 @@ view : Model -> Browser.Document Msg
 view model =
     let
         viewPage :
-            (msg -> Msg)
+            Page.Page
+            -> (msg -> Msg)
             -> { title : String, content : Element msg }
             -> Browser.Document Msg
-        viewPage toMsg config =
-            Page.view config toMsg
+        viewPage page toMsg config =
+            Page.view page config toMsg
     in
     case model of
         Index index ->
             Index.view index
-                |> viewPage GotIndexMsg
+                |> viewPage Page.pages.index GotIndexMsg
+
+        Guides guides ->
+            Guides.view guides
+                |> viewPage Page.pages.guides identity
 
         Directory directory ->
             Directory.view directory
-                |> viewPage GotDirectoryMsg
+                |> viewPage Page.pages.directory GotDirectoryMsg
 
         SetupVps setup ->
             SetupVps.view setup
-                |> viewPage GotSetupVpsMsg
+                |> viewPage Page.pages.setupVps GotSetupVpsMsg
 
         SetupGit setup ->
             SetupGit.view setup
-                |> viewPage GotSetupGitMsg
+                |> viewPage Page.pages.setupGit GotSetupGitMsg
 
 
 

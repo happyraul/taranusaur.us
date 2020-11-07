@@ -1,17 +1,50 @@
-module Page exposing (Page(..), colors, view)
+module Page exposing (Page, colors, pages, view)
 
 import Browser
 import Element exposing (..)
 import Element.Background as Background
+import Element.Border as Border
 import Element.Font as Font
 import FontAwesome.Styles as Icon
 
 
-type Page
-    = Index
-    | Directory
-    | Setup
-    | Vim
+
+-- MODEL
+
+
+type alias Page =
+    { target : String
+    , anchor : String
+    }
+
+
+type Navigation
+    = Navigation (List Entry)
+
+
+type Entry
+    = Section Page (List Entry)
+    | Entry Page
+
+
+navMenu =
+    Navigation
+        [ Entry pages.index
+        , Entry pages.directory
+        , Section pages.guides
+            [ Entry pages.setupVps
+            , Entry pages.setupGit
+            ]
+        ]
+
+
+pages =
+    { index = Page "/" "about"
+    , directory = Page "/directory" "directory/"
+    , guides = Page "/guides" "guides/"
+    , setupVps = Page "/setup-vps" "vps/"
+    , setupGit = Page "/setup-git" "git/"
+    }
 
 
 
@@ -30,12 +63,13 @@ colors =
     , warning = rgb 0.8 0.2 0.2
     , link = rgb 0.361 0.502 0.737
     , black = rgb 0.067 0.067 0.067
-    , darkgrey = rgb 0.31 0.31 0.31
     , lightgrey = rgb 0.733 0.733 0.733
     , pink = rgb 1.0 0.455 0.549
     , tan = rgb 0.824 0.706 0.549
     , reallyLightBlue = rgb 0.91 0.99 0.99
     , reallyLightPink = rgb 0.99 0.95 0.99
+    , greyBlue = rgb 0.42 0.545 0.643 -- #6b8ba4
+    , darkGrey = rgb 0.212 0.212 0.216 -- #363737
     , lilac = rgb 0.808 0.635 0.992 -- #cea2fd
     , lightViolet = rgb 0.839 0.706 0.988 -- #d6b4fc
     , lightLavender = rgb 0.875 0.773 0.996 -- #dfc5fe
@@ -48,10 +82,11 @@ colors =
 
 
 view :
-    { title : String, content : Element subMsg }
+    Page
+    -> { title : String, content : Element subMsg }
     -> (subMsg -> msg)
     -> Browser.Document msg
-view { title, content } toSubMsg =
+view page { title, content } toSubMsg =
     Browser.Document ("Taranusaurus | " ++ title)
         [ Icon.css
         , layout
@@ -82,7 +117,82 @@ view { title, content } toSubMsg =
                         [ link [] { url = "/", label = text "Taranusaurus" }
                         , text (" |> " ++ title)
                         ]
-                    , map toSubMsg content
+                    , row [ spacing 20 ]
+                        [ viewNavigation page.target
+                        , map toSubMsg content
+                        ]
                     ]
                 ]
         ]
+
+
+viewNavigation : String -> Element msg
+viewNavigation current =
+    let
+        entries =
+            case navMenu of
+                Navigation navEntries ->
+                    navEntries
+
+        navEntry =
+            viewSection 0 current
+    in
+    column
+        [ alignTop
+        , spacing 7
+        , Border.widthEach { edges | right = 1 }
+        , Border.color colors.darkGrey
+        , paddingEach { edges | right = 60 }
+        ]
+        (List.map navEntry entries)
+
+
+viewSection : Int -> String -> Entry -> Element msg
+viewSection level current navEntry =
+    let
+        entryUrl e =
+            case e of
+                Entry entry ->
+                    entry.target
+
+                Section entry _ ->
+                    entry.target
+    in
+    case navEntry of
+        Entry entry ->
+            viewLink level current entry
+
+        Section entry entries ->
+            if
+                current
+                    == entry.target
+                    || List.member current (List.map entryUrl entries)
+            then
+                column [ spacing 7 ]
+                    (viewLink level current entry
+                        :: List.map (viewSection (level + 1) current) entries
+                    )
+
+            else
+                viewLink level current entry
+
+
+viewLink : Int -> String -> Page -> Element msg
+viewLink level current page =
+    let
+        baseAttributes =
+            [ Font.color colors.link
+
+            --, Events.onMouseEnter (HoveredLink page)
+            --, Events.onMouseLeave UnHoveredLink
+            , paddingEach { edges | left = 20 * level }
+            ]
+
+        attributes =
+            if current == page.target then
+                Font.bold :: baseAttributes
+
+            else
+                baseAttributes
+    in
+    link attributes { url = page.target, label = text page.anchor }

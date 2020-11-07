@@ -11,6 +11,7 @@ import Url.Parser as Parser exposing ((</>))
 type Route
     = Index
     | Directory (Maybe String)
+    | Guides
     | SetupVps
     | SetupGit
     | Vim
@@ -21,6 +22,7 @@ parser =
     Parser.oneOf
         [ route Index Parser.top
         , route Directory (Parser.s "directory" </> Parser.fragment identity)
+        , route Guides (Parser.s "guides")
         , route SetupVps (Parser.s "setup-vps" </> Parser.top)
         , route SetupGit (Parser.s "setup-git" </> Parser.top)
         , route Vim (Parser.s "vim" </> Parser.top)

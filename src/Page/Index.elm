@@ -52,41 +52,67 @@ edges =
 view : Model -> { title : String, content : Element Msg }
 view model =
     let
-        navEntry level =
-            viewLink level model.activeLink
-
-        rootEntry =
-            navEntry 0
+        link =
+            viewLink model.activeLink
     in
     { title = "Perpetually Peregrine"
     , content =
-        column [ spacing 7 ]
-            [ rootEntry "/books" "Books"
-            , rootEntry "/coins" "Coins"
-            , rootEntry "/cycling" "Cycling"
-            , rootEntry "/directory" "Directory"
-            , rootEntry "https://git.taranusaur.us/" "Git"
-            , column [ spacing 7 ]
-                [ text "Setup"
-                , navEntry 1 "/setup-vps" "VPS & nginx"
-                , navEntry 1 "/setup-git" "git server"
-                ]
-
-            --            , rootEntry "setup/" "Setup"
-            , rootEntry "/video-games" "Video Games"
-            , rootEntry "/vim" "Vim"
+        textColumn [ alignTop, spacing 20 ]
+            [ paragraph [ Font.size 28, Font.bold ] [ text "News" ]
+            , viewEntry "2020-07-27" <|
+                paragraph []
+                    [ text "Published "
+                    , link "/setup-git" "git server guide"
+                    , text "."
+                    ]
+            , viewEntry "2020-07-20" <|
+                paragraph []
+                    [ text "Published "
+                    , link "/setup-vps" "VPS setup guide"
+                    , text "."
+                    ]
+            , viewEntry "2019-09-13" <|
+                paragraph []
+                    [ text "Published "
+                    , link "/directory" "directory"
+                    , text "."
+                    ]
             ]
+
+    --column [ spacing 7 ]
+    --    [ rootEntry "/" "about"
+    --    , rootEntry "/books" "Books"
+    --    , rootEntry "/coins" "Coins"
+    --    , rootEntry "/cycling" "Cycling"
+    --    , rootEntry "/directory" "Directory"
+    --    , rootEntry "https://git.taranusaur.us/" "Git"
+    --    , column [ spacing 7 ]
+    --        [ text "Setup"
+    --        , navEntry 1 "/setup-vps" "VPS & nginx"
+    --        , navEntry 1 "/setup-git" "git server"
+    --        ]
+    --    --            , rootEntry "setup/" "Setup"
+    --    , rootEntry "/video-games" "Video Games"
+    --    , rootEntry "/vim" "Vim"
+    --    ]
     }
 
 
-viewLink : Int -> Maybe String -> String -> String -> Element Msg
-viewLink level activeLink url page =
+viewEntry : String -> Element msg -> Element msg
+viewEntry date entry =
+    textColumn [ spacing 5 ]
+        [ paragraph [ Font.bold, Font.size 24 ] [ text date ]
+        , paragraph [] [ el [] entry ]
+        ]
+
+
+viewLink : Maybe String -> String -> String -> Element Msg
+viewLink activeLink url page =
     let
         baseAttributes =
             [ Font.color Page.colors.link
             , Events.onMouseEnter (HoveredLink page)
             , Events.onMouseLeave UnHoveredLink
-            , paddingEach { edges | left = 40 * level }
             ]
 
         attributes =
