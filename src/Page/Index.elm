@@ -59,6 +59,16 @@ view model =
     , content =
         textColumn [ alignTop, spacing 20 ]
             [ paragraph [ Font.size 28, Font.bold ] [ text "News" ]
+            , viewEntry "2020-12-30" <|
+                paragraph []
+                    [ text "Updated directory with "
+                    , link
+                        ("https://www.arcgis.com/apps/webappviewer/"
+                            ++ "index.html?id=be830565f4f34d32882962f788f560db"
+                        )
+                        "Saint Louis Historical Aerial imagery"
+                    , text "."
+                    ]
             , viewEntry "2020-07-27" <|
                 paragraph []
                     [ text "Published "

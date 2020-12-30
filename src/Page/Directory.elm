@@ -363,6 +363,13 @@ initialModel session =
                     "https://symmetricstrength.com/standards/"
                     (Just <| text "Strength standards by sex and bodyweight")
                 ]
+            , Section "Maps"
+                [ Entry "Saint Louis Historic Aerial Imagery"
+                    ("https://www.arcgis.com/apps/webappviewer/index.html"
+                        ++ "?id=be830565f4f34d32882962f788f560db"
+                    )
+                    (Just <| text "1937 to 2018")
+                ]
             , Section "News"
                 [ Entry "Ars Technica"
                     "https://arstechnica.com/"
