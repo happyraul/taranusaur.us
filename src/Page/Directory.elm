@@ -115,16 +115,6 @@ view model =
     }
 
 
-viewPageHeading : String -> Element msg
-viewPageHeading heading =
-    el
-        [ Font.size 36
-        , Font.heavy
-        , paddingEach { edges | bottom = 10 }
-        ]
-        (text heading)
-
-
 viewNavigation : List Entry -> Maybe String -> Element Msg
 viewNavigation entries activeLink =
     let
@@ -158,7 +148,6 @@ viewNavigation entries activeLink =
                 ]
                 (List.map (viewNavColumn activeLink) columns)
             ]
-        , column [ width (fillPortion 1) ] []
         ]
 
 
